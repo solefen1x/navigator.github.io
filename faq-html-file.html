@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F&G Quantum FAQ</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header-card">
+            <h1>F&G Quantum FAQ</h1>
+            <p class="subtitle">Quick answers to your Quantum questions</p>
+            
+            <div class="search-container">
+                <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search questions and answers..."
+                    class="search-input"
+                />
+            </div>
+
+            <div id="categoryButtons" class="category-buttons"></div>
+        </div>
+
+        <div id="faqContent" class="faq-content"></div>
+        
+        <div id="noResults" class="no-results" style="display: none;">
+            <p>No results found. Try a different search term.</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
