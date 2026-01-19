@@ -55,6 +55,132 @@
         .resolution-rate {
             color: #28a745;
         }
+        /* Edit Button */
+        .edit-btn {
+            background-color: #0066cc;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .edit-btn:hover {
+            background-color: #0052a3;
+        }
+        /* Modal Background Overlay */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6); /* Dark semi-transparent */
+            overflow: auto; /* Allow scrolling if needed */
+        }
+        /* Modal Content Box */
+        .modal-content {
+            background-color: white;
+            margin: 3% auto;
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        /* Close Button (X) */
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            font-size: 32px;
+            font-weight: bold;
+            color: #999;
+            cursor: pointer;
+            line-height: 1;
+        }
+        .close:hover {
+            color: #333;
+        }
+
+        /* Form Grid Layout */
+        .form-grid {
+            display: grid;
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .day-section {
+            border: 1px solid #e0e0e0;
+            padding: 15px;
+            border-radius: 6px;
+            background-color: #f8f9fa;
+        }
+
+        .day-section h3 {
+            margin: 0 0 10px 0;
+            color: #333;
+            font-size: 16px;
+        }
+
+        .day-section label {
+            display: block;
+            margin-bottom: 8px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .day-section input {
+            width: 80px;
+            padding: 6px 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            margin-left: 10px;
+        }
+
+        /* Modal Buttons */
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .save-btn, .cancel-btn {
+            padding: 10px 30px;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .save-btn {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .save-btn:hover {
+            background-color: #218838;
+        }
+
+        .cancel-btn {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .cancel-btn:hover {
+            background-color: #5a6268;
+        }
     </style>
 </head>
 <body>
@@ -79,6 +205,51 @@
                 <div class="stat-label">Resolution Rate</div>
             </div>
         </div>
+        <!-- Edit Button -->
+        <button class="edit-btn" onclick="openEditor()">✏️ Edit Data</button>
+
+        <!-- Modal Overlay -->
+        <div id="editorModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeEditor()">&times;</span>
+                <h2>Edit Chart Data</h2>
+    
+                <div class="form-grid">
+                    <div class="day-section">
+                    <h3>Monday</h3>
+                    <label>Resolved: <input type="number" id="mon-resolved" value="6" min="0"></label>
+                    <label>Escalated: <input type="number" id="mon-escalated" value="0" min="0"></label>
+                </div>
+                <div class="day-section">
+                    <h3>Tuesday</h3>
+                    <label>Resolved: <input type="number" id="tue-resolved" value="8" min="0"></label>
+                    <label>Escalated: <input type="number" id="tue-escalated" value="5" min="0"></label>
+                </div>
+
+                <div class="day-section">
+                    <h3>Wednesday</h3>
+                    <label>Resolved: <input type="number" id="wed-resolved" value="12" min="0"></label>
+                    <label>Escalated: <input type="number" id="wed-escalated" value="0" min="0"></label>
+                </div>
+                <div class="day-section">
+                    <h3>Thursday</h3>
+                    <label>Resolved: <input type="number" id="thu-resolved" value="7" min="0"></label>
+                    <label>Escalated: <input type="number" id="thu-escalated" value="2" min="0"></label>
+                </div>
+                <div class="day-section">
+                    <h3>Friday</h3>
+                    <label>Resolved: <input type="number" id="fri-resolved" value="8" min="0"></label>
+                    <label>Escalated: <input type="number" id="fri-escalated" value="4" min="0"></label>
+                </div>
+            </div>
+    
+            <div class="modal-buttons">
+                <button class="save-btn" onclick="saveChanges()">Save & Update</button>
+                <button class="cancel-btn" onclick="closeEditor()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
     </div>
 
     <script>
@@ -165,8 +336,80 @@
                 }
             }
         };
+        
+        // Store the chart in a variable so we can access it
+        let myChart = new Chart(ctx, config); // Change "new Chart" to "myChart = new Chart"
 
-        new Chart(ctx, config);
+        // Function to open the modal
+        function openEditor() {
+        // Pre-fill inputs with current chart values
+            document.getElementById('mon-resolved').value = myChart.data.datasets[0].data[0];
+            document.getElementById('mon-escalated').value = myChart.data.datasets[1].data[0];
+            document.getElementById('tue-resolved').value = myChart.data.datasets[0].data[1];
+            document.getElementById('tue-escalated').value = myChart.data.datasets[1].data[1];
+            document.getElementById('wed-resolved').value = myChart.data.datasets[0].data[2];
+            document.getElementById('wed-escalated').value = myChart.data.datasets[1].data[2];
+            document.getElementById('thu-resolved').value = myChart.data.datasets[0].data[3];
+            document.getElementById('thu-escalated').value = myChart.data.datasets[1].data[3];
+            document.getElementById('fri-resolved').value = myChart.data.datasets[0].data[4];
+            document.getElementById('fri-escalated').value = myChart.data.datasets[1].data[4];
+    
+            // Show the modal
+            document.getElementById('editorModal').style.display = 'block';
+        }
+
+        // Function to close the modal
+        function closeEditor() {
+            document.getElementById('editorModal').style.display = 'none';
+        }
+
+        // Function to save changes and update chart
+        function saveChanges() {
+        // Get new values from inputs
+            const newResolved = [
+                parseInt(document.getElementById('mon-resolved').value) || 0,
+                parseInt(document.getElementById('tue-resolved').value) || 0,
+                parseInt(document.getElementById('wed-resolved').value) || 0,
+                parseInt(document.getElementById('thu-resolved').value) || 0,
+                parseInt(document.getElementById('fri-resolved').value) || 0
+            ];
+    
+            const newEscalated = [
+                parseInt(document.getElementById('mon-escalated').value) || 0,
+                parseInt(document.getElementById('tue-escalated').value) || 0,
+                parseInt(document.getElementById('wed-escalated').value) || 0,
+                parseInt(document.getElementById('thu-escalated').value) || 0,
+                parseInt(document.getElementById('fri-escalated').value) || 0
+            ];
+    
+            // Update chart data
+            myChart.data.datasets[0].data = newResolved;
+            myChart.data.datasets[1].data = newEscalated;
+            myChart.update();
+    
+            // Recalculate statistics
+            const totalResolved = newResolved.reduce((a, b) => a + b, 0);
+            const totalEscalated = newEscalated.reduce((a, b) => a + b, 0);
+            const totalChats = totalResolved + totalEscalated;
+            const resolutionRate = totalChats > 0 ? Math.round((totalResolved / totalChats) * 100) : 0;
+    
+            // Update stat displays
+            const statValues = document.querySelectorAll('.stat-value');
+            statValues[0].textContent = totalResolved;
+            statValues[1].textContent = totalEscalated;
+            statValues[2].textContent = resolutionRate + '%';
+    
+            // Close modal
+            closeEditor();
+        }
+
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            const modal = document.getElementById('editorModal');
+            if (event.target === modal) {
+            closeEditor();
+        }
+    }
     </script>
 </body>
 </html>
