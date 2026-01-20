@@ -187,6 +187,32 @@
         .cancel-btn:hover {
             background-color: #5a6268;
         }
+        /* Next Button */
+        .next-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #0066cc;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 16px;
+            transition: background-color 0.2s;
+            margin-top: 30px;
+            float: right;
+        }
+
+        .next-btn:hover {
+            background: #0052a3;
+        }
+
+        .clearfix::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
     </style>
 </head>
 <body>
@@ -254,9 +280,12 @@
                 <button class="cancel-btn" onclick="closeEditor()">Cancel</button>
             </div>
         </div>
+        <div class="clearfix">
+            <a href="https://solefen1x.github.io/navigator/ticket-overview" class="next-btn">Next →</a>
+        </div>
     </div>
 
-    </div>
+</div>
 
     <script>
         const ctx = document.getElementById('chatChart').getContext('2d');
