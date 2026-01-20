@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket Overview</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(to bottom right, #f8fafc, #f1f5f9);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .header h1 {
+            font-size: 1.875rem;
+            font-weight: bold;
+            color: #111827;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: #6b7280;
+        }
+
+        .table-container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: #f9fafb;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        th {
+            padding: 1rem 1.5rem;
+            text-align: left;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #374151;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        th:hover {
+            background: #f3f4f6;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #e5e7eb;
+            transition: background-color 0.2s;
+        }
+
+        tbody tr:hover {
+            background: #f9fafb;
+        }
+
+        td {
+            padding: 1rem 1.5rem;
+            white-space: nowrap;
+        }
+
+        .ticket-id {
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #111827;
+        }
+
+        .date {
+            font-size: 0.875rem;
+            color: #374151;
+        }
+
+        .category-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .category-q2a {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .category-b2b {
+            background: #e9d5ff;
+            color: #6b21a8;
+        }
+
+        .category-hq {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            color: #2563eb;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .link:hover {
+            color: #1e40af;
+        }
+
+        .footer {
+            margin-top: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-text {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .next-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #2563eb;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+
+        .next-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .sort-arrow {
+            font-size: 0.75rem;
+            margin-left: 0.25rem;
+        }
+
+        .external-icon {
+            width: 16px;
+            height: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Ticket Overview</h1>
+            <p>January 2026 - Support Tickets</p>
+        </div>
+
+        <!-- Table -->
+        <div class="table-container">
+            <table id="ticketTable">
+                <thead>
+                    <tr>
+                        <th onclick="sortTable(0)">Ticket ID <span class="sort-arrow" id="sort-0"></span></th>
+                        <th onclick="sortTable(1)">Date Created <span class="sort-arrow" id="sort-1"></span></th>
+                        <th onclick="sortTable(2)">Date Resolved <span class="sort-arrow" id="sort-2"></span></th>
+                        <th onclick="sortTable(3)">Category <span class="sort-arrow" id="sort-3"></span></th>
+                        <th>Link</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="ticket-id">1718795</span></td>
+                        <td><span class="date">1/22/2026</span></td>
+                        <td><span class="date">1/22/2026</span></td>
+                        <td><span class="category-badge category-q2a">Navigator Q2A</span></td>
+                        <td>
+                            <a href="https://symmetry.zendesk.com/agent/tickets/1718795" target="_blank" class="link">
+                                <svg class="external-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                                </svg>
+                                View
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span class="ticket-id">1716817</span></td>
+                        <td><span class="date">1/21/2026</span></td>
+                        <td><span class="date">1/21/2026</span></td>
+                        <td><span class="category-badge category-b2b">Navigator B2B</span></td>
+                        <td>
+                            <a href="https://symmetry.zendesk.com/agent/tickets/1716817" target="_blank" class="link">
+                                <svg class="external-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                                </svg>
+                                View
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span class="ticket-id">1716147</span></td>
+                        <td><span class="date">1/21/2026</span></td>
+                        <td><span class="date">1/21/2026</span></td>
+                        <td><span class="category-badge category-hq">B2B HQ</span></td>
+                        <td>
+                            <a href="https://symmetry.zendesk.com/agent/tickets/1716147" target="_blank" class="link">
+                                <svg class="external-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                                </svg>
+                                View
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span class="ticket-id">1720905</span></td>
+                        <td><span class="date">1/15/2026</span></td>
+                        <td><span class="date">1/16/2026</span></td>
+                        <td><span class="category-badge category-q2a">Navigator Q2A</span></td>
+                        <td>
+                            <a href="https://symmetry.zendesk.com/agent/tickets/1720905" target="_blank" class="link">
+                                <svg class="external-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                                </svg>
+                                View
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-text">
+                Click column headers to sort • Click "View" to open ticket in Zendesk
+            </div>
+            <a href="https://solefen1x.github.io/navigator/" class="next-btn">
+                Next →
+            </a>
+        </div>
+    </div>
+
+    <script>
+        let sortDirection = {};
+        
+        function sortTable(columnIndex) {
+            const table = document.getElementById('ticketTable');
+            const tbody = table.querySelector('tbody');
+            const rows = Array.from(tbody.querySelectorAll('tr'));
+            
+            // Initialize sort direction for this column
+            if (!sortDirection[columnIndex]) {
+                sortDirection[columnIndex] = 'asc';
+            }
+            
+            // Toggle direction
+            const isAsc = sortDirection[columnIndex] === 'asc';
+            sortDirection[columnIndex] = isAsc ? 'desc' : 'asc';
+            
+            // Sort rows
+            rows.sort((a, b) => {
+                const aVal = a.cells[columnIndex].textContent.trim();
+                const bVal = b.cells[columnIndex].textContent.trim();
+                
+                // Handle dates
+                if (columnIndex === 1 || columnIndex === 2) {
+                    const aDate = new Date(aVal);
+                    const bDate = new Date(bVal);
+                    return isAsc ? aDate - bDate : bDate - aDate;
+                }
+                
+                // Handle text/numbers
+                if (aVal < bVal) return isAsc ? -1 : 1;
+                if (aVal > bVal) return isAsc ? 1 : -1;
+                return 0;
+            });
+            
+            // Clear existing rows
+            tbody.innerHTML = '';
+            
+            // Append sorted rows
+            rows.forEach(row => tbody.appendChild(row));
+            
+            // Update sort arrows
+            document.querySelectorAll('.sort-arrow').forEach(arrow => arrow.textContent = '');
+            document.getElementById(`sort-${columnIndex}`).textContent = isAsc ? '↑' : '↓';
+        }
+    </script>
+</body>
+</html>
