@@ -248,12 +248,12 @@
     
                 <div class="form-grid">
                     <div class="day-section">
-                    <h3>Week 1</h3>
+                    <h3>Monday</h3>
                     <label>Resolved: <input type="number" id="mon-resolved" value="6" min="0"></label>
                     <label>Escalated: <input type="number" id="mon-escalated" value="0" min="0"></label>
                 </div>
                 <div class="day-section">
-                    <h3>Week 2</h3>
+                    <h3>Tuesday</h3>
                     <label>Resolved: <input type="number" id="tue-resolved" value="8" min="0"></label>
                     <label>Escalated: <input type="number" id="tue-escalated" value="5" min="0"></label>
                 </div>
@@ -292,7 +292,7 @@
         const ctx = document.getElementById('chatChart').getContext('2d');
         
         const data = {
-            labels: ['Week 1', 'Week 2', 'Week 3', 'Week 3', 'Week 4'],
+            labels: ['Weekend 1', 'Weekend 2', 'Weekend 3', 'Weekend 3', 'Weekend 4'],
             datasets: [
                 {
                     label: 'Chats Resolved',
